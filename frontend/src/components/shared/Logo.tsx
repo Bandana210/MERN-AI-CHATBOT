@@ -9,7 +9,7 @@ const Logo=() => {
         alignItems: "center",
         gap: "15%",
         }}>
-            <Link to={"/"} ><img src="img4.jpg" alt="Logo" width={"30px"} height={"30px"} className='image-inverted' />
+            <Link to={"/"} ><img src="logo.jpeg" alt="Logo" width={"30px"} height={"30px"} className='image-inverted' />
             <Typography sx={{ display:{ xs:"block", md:"block" },
             mr:"auto",
             fontWeight: "600",
