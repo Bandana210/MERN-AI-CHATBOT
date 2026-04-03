@@ -34,7 +34,7 @@
     "lib": ["DOM", "ES6"],
     "jsx": "react-jsx",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": false,
     "allowJs": true,
     "esModuleInterop": true,
