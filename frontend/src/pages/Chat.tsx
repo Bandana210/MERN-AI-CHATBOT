@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box,Avatar,Typography, Button} from "@mui/material";
-import red from "@mui/material/colors/red";
+import { red } from '@mui/material/colors';
 import {useAuth} from "../context/AuthContext";
 const Chat=() => {
     const auth= useAuth();
