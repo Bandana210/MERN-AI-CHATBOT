@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { loginUser , signupUser , checkAuthStatus  } from "../helpers/api-communicators";
 
 type User = {
   name: string;
@@ -20,35 +21,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
-        //fetch if the user's cookies are valid then skip login
-    },[]);
-    const login=async(email: String, password: string)=>{
-      const data=await loginUser(email,password);
-      if (data){
-        setUser({email:data.email, password:data.password});
+    //fetch if the user's cookies are valid then skip login
+    async function checkStatus(){
+      const data = await checkAuthStatus();
+      if(data){
+        setUser({ email: data.email, name: data.name });
         setIsLoggedIn(true);
       }
-    };
-    const signup=async(name:string,email:string,password:string)=>{
-      const data=await signupUser(name,email,password);
-      if (data){
-        setUser({email:data.email, password:data.password});
-        setIsLoggedIn(true);
-      }
-    };
-    const logout=async()=>{
-      await logoutUser();
-      setIsLoggedIn(false);
-      setUser(null);
-      window.location.reload();
-    };
-    const value={
-      user,
-      isLoggedIn,
-      login,
-      logout,
-      signup,
-    };
+    }
+
+    checkStatus();
+
+  }, []);
+  const login = async (email: string, password: string) => {
+    const data = await loginUser(email, password);
+    if (data) {
+      setUser({ email: data.email, name: data.name });
+      setIsLoggedIn(true);
+    }
+  };
+  const signup = async (name: string, email: string, password: string) => {
+    const data = await signupUser(name, email, password);
+    if (data) {
+      setUser({ email: data.email, name: data.name });
+      setIsLoggedIn(true);
+    }
+  };
+  const logout = async () => {
+    await logoutUser();
+    setIsLoggedIn(false);
+    setUser(null);
+    window.location.reload();
+  };
+  const value = {
+    user,
+    isLoggedIn,
+    login,
+    logout,
+    signup,
+  };
   /*const login = async (email: string, password: string) => {
     setUser({ name: "Demo", email });
     setIsLoggedIn(true);
@@ -62,11 +73,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   }; */
 
-  return 
+  return (
     <AuthContext.Provider
       value={value}>{children}
-    </AuthContext.Provider>;
+    </AuthContext.Provider>
+  );
 };
 
 
 export const useAuth = () =>  useContext(AuthContext);
+
