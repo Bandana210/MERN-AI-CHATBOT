@@ -8,6 +8,7 @@ const userRoutes = Router();
 userRoutes.get("/", getAllUsers);
 userRoutes.post("/signup", validate(signupValidator), userSignup);
 userRoutes.post("/login", userLogin);
+userRoutes.get("/auth-status", userLogout);
 userRoutes.get("/logout", userLogout);
 export default userRoutes;
 //# sourceMappingURL=user-routes.js.map
