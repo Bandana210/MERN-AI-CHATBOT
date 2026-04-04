@@ -4,6 +4,7 @@ import { loginUser , signupUser , checkAuthStatus  } from "../helpers/api-commun
 type User = {
   name: string;
   email: string;
+  password: string;
 };
 
 type UserAuth = {
@@ -65,13 +66,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoggedIn(true);
   };
 
-  const signup = async (email: string, password: string) => {
-    setUser({ name: "New User", email });
+  const signup = async (name: string, email: string, password: string) => {
+    const data = await signupUser(name, email, password);
+    if (data) {
+      setUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+      setIsLoggedIn(true);
+    }
   };
 
   const logout = async () => {
+    await logoutUser();
+    setIsLoggedIn(false);
     setUser(null);
-  }; */
+    window.location.reload();
+  };
 
   return (
     <AuthContext.Provider
@@ -81,5 +93,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 
-export const useAuth = () =>  useContext(AuthContext);
-
+export const useAuth = () =>  useContext(AuthContext);  */
