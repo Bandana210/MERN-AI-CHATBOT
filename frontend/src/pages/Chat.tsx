@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { useEffect, useLayoutEffect } from "react";
 import {Box,Avatar,Typography, Button,IconButton} from "@mui/material";
 import { red } from '@mui/material/colors';
 import {useAuth} from "../context/AuthContext";
@@ -9,8 +10,10 @@ import {
     deleteUserChats,
     getUserChats,
     sendChatRequest,
-} from "../helpers/api-communicator";
+} from "../helpers/api-communicators";
 import toast from "react-hot-toast";
+
+
 
 type Messages={
     role: "user" | "assistant";
@@ -34,7 +37,7 @@ const Chat=() => {
         setChatMessages([...chatData.chats]);
         //
     };
-    const hadleDeleteChats= async()=>{
+    const handleDeleteChats= async()=>{
         try {
             toast.loading("Deleting Chats",{id: "deletechats"});
             await deleteUserChats();
@@ -58,11 +61,11 @@ const Chat=() => {
         });
         }
     },[auth]);
-    useEffect(()=> {
-        if (!auth?.user){
-            return navigate("/login");
+    useEffect(() => {
+        if (!auth?.user) {
+        navigate("/login");
         }
-    },[auth]);
+    }, [auth]);
 
     return (
         <Box sx={{
