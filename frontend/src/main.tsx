@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client'
+// @ts-ignore: CSS module declaration
 import './index.css';
 import App from "./App";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
