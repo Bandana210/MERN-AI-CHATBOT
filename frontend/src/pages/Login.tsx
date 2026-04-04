@@ -28,6 +28,12 @@ const Login = () => {
 
   console.log(email, password);
 };
+useEffect(()=> {
+  if(auth.user){
+    return navigate("/chat");
+  }
+},[auth])
+
   return (
     <Box width={"100%"} height={"100vh"} display="flex" flex={1}>
       <Box
