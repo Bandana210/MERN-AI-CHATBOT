@@ -10,7 +10,7 @@ import Signup from './pages/Signup'
 import NotFound from './pages/NotFound'
 
 function App() {
-  const auth= useAuth();
+ const auth= useAuth();
   return ( 
   <main>
     <Header/>
@@ -21,7 +21,9 @@ function App() {
     <Route path="/signup" element={<Signup/>}/>
     {auth?.isLoggedIn && auth.user && (<Route path="/chat" element={<Chat />} />)}
     <Route path="*" element={<NotFound/>}/>
-  </Routes>  </main>);
+  </Routes>  </main>); 
+
+
 } 
 
 export default App;
