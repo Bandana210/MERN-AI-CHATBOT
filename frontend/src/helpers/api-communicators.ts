@@ -37,3 +37,4 @@ export const logoutUser = async () => {
   const data = await res.data;
   return data;
 };
+

@@ -61,36 +61,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logout,
     signup,
   };
-  /*const login = async (email: string, password: string) => {
-    setUser({ name: "Demo", email });
-    setIsLoggedIn(true);
-  };
-
-  const signup = async (name: string, email: string, password: string) => {
-    const data = await signupUser(name, email, password);
-    if (data) {
-      setUser({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      });
-      setIsLoggedIn(true);
-    }
-  };
-
-  const logout = async () => {
-    await logoutUser();
-    setIsLoggedIn(false);
-    setUser(null);
-    window.location.reload();
-  };
-
-  return (
-    <AuthContext.Provider
-      value={value}>{children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 
-export const useAuth = () =>  useContext(AuthContext);  */
+export const useAuth = () =>  useContext(AuthContext);
