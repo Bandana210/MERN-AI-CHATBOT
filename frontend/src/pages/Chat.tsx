@@ -32,10 +32,16 @@ const Chat=() => {
         }
         const newMessage: Messages = { role: "user", content };
         setChatMessages(prev => [...prev, newMessage]);
+        try {
+            const chatData = await sendChatRequest(content);
+            console.log("CHAT RESPONSE:", chatData); // debug
+            setChatMessages([...chatData.chats]);
+        } catch (error) {
+            console.log(error);
+            toast.error("Bot failed to respond");
+        }
 
-        const chatData= await sendChatRequest(content)
-        setChatMessages([...chatData.chats]);
-        //
+        
     };
     const handleDeleteChats= async()=>{
         try {
@@ -54,7 +60,7 @@ const Chat=() => {
             toast.loading("Loading Chats",{id: "laodchats"});
             getUserChats().then((data) => {
                 setChatMessages([...data.chats]);
-                toast.loading("Successfully Loaded Chats",{id: "laodchats"});
+                toast.success("Successfully Loaded Chats",{id: "laodchats"});
             }).catch(err => {
                 console.log(err);
                 toast.error("Loading Failed", {id:"loadchats"})
@@ -102,7 +108,7 @@ const Chat=() => {
         </Box>
         </Box>
         <Box sx={{display:'flex',flex:{md:0.8,xs:1,sm:1},flexDirection:'column',px:3}}>
-            <Typography sx={{textAlign:'center',fontSize:"40px",color:'white',mb:2}}>Model-GPT 3.5 Turbo</Typography>
+            <Typography sx={{textAlign:'center',fontSize:"40px",color:'white',mb:2}}>AI Chat Assistant</Typography>
             <Box sx={{width:"100%",
                 height:"60vh",
                 borderRadius:3,

@@ -3,6 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import NavigationLink from "./shared/NavigationLink";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
