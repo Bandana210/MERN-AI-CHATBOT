@@ -107,10 +107,6 @@ export const deleteChats = async (
 };
 */
 
-import { Request, Response, NextFunction } from "express";
-import User from "../models/User.js";
-import { configureOpenAI } from "../config/openai-config.js";
-import { ChatCompletionRequestMessage, OpenAIApi } from "openai";
 
 /*export const generateChatCompletion = async (
   req: Request,
@@ -180,12 +176,18 @@ import { ChatCompletionRequestMessage, OpenAIApi } from "openai";
 };
 */
 
+import { Request, Response, NextFunction } from "express";
+import User from "../models/User.js";
+import { configureOpenAI } from "../config/openai-config.js";
+import { ChatCompletionRequestMessage, OpenAIApi } from "openai";
+
 export const generateChatCompletion = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { message, chatId } = req.body;
+  // ✅ UPDATED (added image)
+  const { message, chatId, image } = req.body;
 
   try {
     const user = await User.findById(res.locals.jwtData.id);
@@ -194,32 +196,61 @@ export const generateChatCompletion = async (
       return res.status(404).json({ message: "User not found" });
     }
 
-    //  find existing chat
+    // find existing chat
     let chat = user.chats.find((c) => c.chatId === chatId);
 
-    // if chat doesn't exist → create properly
+    // create new chat if not exists
     if (!chat) {
       const newChat = {
         chatId,
-        title: message.substring(0, 20),
+        title: message ? message.substring(0, 20) : "New Chat",
         messages: [],
       } as any;
 
       user.chats.push(newChat);
-
-      // IMPORTANT: reassign from mongoose array
       chat = user.chats[user.chats.length - 1];
     }
 
-    //  prepare messages for OpenAI
+    // prepare previous messages
     const messages = chat.messages.map(({ role, content }) => ({
       role,
       content,
     })) as ChatCompletionRequestMessage[];
 
-    // add user message
-    messages.push({ role: "user", content: message });
-    chat.messages.push({ role: "user", content: message });
+    // ✅ NEW: HANDLE IMAGE + TEXT
+    let userMessage: any;
+
+    if (image) {
+      userMessage = {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: message || "Analyze this image",
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: image,
+            },
+          },
+        ],
+      };
+    } else {
+      userMessage = {
+        role: "user",
+        content: message,
+      };
+    }
+
+    // push to OpenAI
+    messages.push(userMessage);
+
+    // ✅ SAVE ONLY TEXT IN DB (important)
+    chat.messages.push({
+      role: "user",
+      content: message || "[Image uploaded]",
+    });
 
     const config = configureOpenAI();
     const openai = new OpenAIApi(config);
@@ -265,7 +296,6 @@ export const generateChatCompletion = async (
   }
 };
 
-
 export const sendChatsToUser = async (
   req: Request,
   res: Response,
@@ -288,7 +318,7 @@ export const sendChatsToUser = async (
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "ERROR" }); //  fixed
+    return res.status(500).json({ message: "ERROR" });
   }
 };
 
@@ -319,6 +349,6 @@ export const deleteChats = async (
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "ERROR" }); // fixed
+    return res.status(500).json({ message: "ERROR" });
   }
 };
