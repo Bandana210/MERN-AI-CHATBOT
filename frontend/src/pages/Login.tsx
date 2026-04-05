@@ -30,7 +30,7 @@ const Login = () => {
   console.log(email, password);
 };
 useEffect(()=> {
-  if(auth.user){
+  if(auth?.user){
     navigate("/chat");
   }
 },[auth?.user]);
