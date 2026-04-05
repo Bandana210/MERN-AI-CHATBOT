@@ -5,8 +5,7 @@ export const loginUser= async (email:string, password:string)=>{
     if(res.status !== 200){
         throw new Error("Unable to login.");
     }
-    const data= await res.data;
-    return data;
+    return res.data;
 };
 
 export const signupUser= async (name:string,email:string, password:string)=>{
@@ -14,8 +13,7 @@ export const signupUser= async (name:string,email:string, password:string)=>{
     if(res.status !== 201){
         throw new Error("Unable to signup.");
     }
-    const data= await res.data;
-    return data;
+    return res.data;
 };
 
 export const checkAuthStatus= async ()=>{
@@ -23,37 +21,32 @@ export const checkAuthStatus= async ()=>{
     if (res.status !== 200){
         throw new Error("unable to authenticate");
     }
-    const data= await res.data;
-    return data;
+    return res.data;
 };
 
 export const logoutUser = async () => {
   const res = await axios.get("/user/logout");
-
   if (res.status !== 200) {
     throw new Error("Unable to logout.");
   }
-
-  const data = await res.data;
-  return data;
+  return res.data;
 };
 
-export const sendChatRequest = async ( message: string ) => {
-    const res = await axios.post("/chat/new", {message});
+// UPDATED (IMPORTANT)
+export const sendChatRequest = async (message: string, chatId?: string) => {
+    const res = await axios.post("/chat/new", { message, chatId });
     if(res.status !== 200){
         throw new Error("Unable to send chat ");
     }
-    const data = await res.data;
-    return data;
+    return res.data;
 };
 
 export const getUserChats = async () => {
     const res = await axios.get("/chat/all-chats");
     if(res.status !== 200){
-        throw new Error("Unable to send chat ");
+        throw new Error("Unable to fetch chats");
     }
-    const data = await res.data;
-    return data;
+    return res.data;
 };
 
 export const deleteUserChats = async () => {
@@ -61,8 +54,23 @@ export const deleteUserChats = async () => {
     if(res.status !== 200){
         throw new Error("Unable to delete chat ");
     }
-    const data = await res.data;
-    return data;
+    return res.data;
 };
 
+//  already added in previous step
+export const getChatSessions = async () => {
+    const res = await axios.get("/chat/sessions");
+    if (res.status !== 200) {
+        throw new Error("Unable to fetch chat sessions");
+    }
+    return res.data;
+};
 
+//  NEW 
+export const getChatById = async (chatId: string) => {
+    const res = await axios.get(`/chat/session/${chatId}`);
+    if (res.status !== 200) {
+        throw new Error("Unable to fetch chat");
+    }
+    return res.data;
+};

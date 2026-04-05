@@ -112,7 +112,7 @@ import User from "../models/User.js";
 import { configureOpenAI } from "../config/openai-config.js";
 import { ChatCompletionRequestMessage, OpenAIApi } from "openai";
 
-export const generateChatCompletion = async (
+/*export const generateChatCompletion = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -175,9 +175,96 @@ export const generateChatCompletion = async (
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Something went wrong" }); // ✅ fixed
+    return res.status(500).json({ message: "Something went wrong" }); // fixed
   }
 };
+*/
+
+export const generateChatCompletion = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { message, chatId } = req.body;
+
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    //  find existing chat
+    let chat = user.chats.find((c) => c.chatId === chatId);
+
+    // if chat doesn't exist → create properly
+    if (!chat) {
+      const newChat = {
+        chatId,
+        title: message.substring(0, 20),
+        messages: [],
+      } as any;
+
+      user.chats.push(newChat);
+
+      // IMPORTANT: reassign from mongoose array
+      chat = user.chats[user.chats.length - 1];
+    }
+
+    //  prepare messages for OpenAI
+    const messages = chat.messages.map(({ role, content }) => ({
+      role,
+      content,
+    })) as ChatCompletionRequestMessage[];
+
+    // add user message
+    messages.push({ role: "user", content: message });
+    chat.messages.push({ role: "user", content: message });
+
+    const config = configureOpenAI();
+    const openai = new OpenAIApi(config);
+
+    let reply;
+
+    try {
+      const chatResponse = await openai.createChatCompletion({
+        model: "gpt-4o-mini",
+        messages,
+      });
+
+      reply = chatResponse.data.choices[0].message;
+    } catch (error) {
+      console.log("OpenAI Error:", error);
+
+      reply = {
+        role: "assistant",
+        content: "AI unavailable. Try again later.",
+      };
+    }
+
+    if (!reply) {
+      reply = {
+        role: "assistant",
+        content: "No response generated.",
+      };
+    }
+
+    // save AI reply
+    chat.messages.push(reply);
+
+    await user.save();
+
+    return res.status(200).json({
+      chatId: chat.chatId,
+      messages: chat.messages,
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
 
 export const sendChatsToUser = async (
   req: Request,
