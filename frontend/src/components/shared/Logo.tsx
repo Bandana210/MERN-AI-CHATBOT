@@ -1,25 +1,23 @@
-import Typography from '@mui/material/Typography';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Box, Typography } from "@mui/material";
 
-const Logo=() => {
-    return <div style={{
-        display: "flex",
-        marginRight: "auto",
-        alignItems: "center",
-        gap: "15%",
-        }}>
-            <Link to={"/"} ><img src="logo.jpeg" alt="Logo" width={"30px"} height={"30px"} className='image-inverted' />
-            <Typography sx={{ display:{ xs:"block", md:"block" },
-            mr:"auto",
-            fontWeight: "600",
-            textShadow:"2px 2px 20px #000" }}>
+const Logo = () => {
+  return (
+    <Box display="flex" alignItems="center" gap={1.5}>
+      <img
+        src="/logo.jpeg"
+        alt="logo"
+        style={{ width: "45px", height: "45px", objectFit: "contain" }}
+      />
 
-            <span style={{ fontSize:"20px"}}>Chat</span>Bro
-            </Typography>
-            </Link>
-    
-    </div>;
+      <Typography
+        variant="h5"
+        fontWeight={700}
+        sx={{ letterSpacing: "1px" }}
+      >
+        ChatBro
+      </Typography>
+    </Box>
+  );
 };
 
 export default Logo;

@@ -1,24 +1,20 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
-// @ts-ignore
-import './App.css'
-import { useAuth } from './context/AuthContext'
-import Header from './components/Header'
-import Home from './pages/Home'
-import Chat from './pages/Chat'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import NotFound from './pages/NotFound'
+import { Routes, Route } from 'react-router-dom';
+import './App.css';
+import { useAuth } from './context/AuthContext';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Chat from './pages/Chat';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import NotFound from './pages/NotFound';
 
 function App() {
   const auth = useAuth();
-  const location = useLocation();
 
   return (
     <main>
-      
-      {/* 🔥 HIDE HEADER ON LOGIN & SIGNUP */}
-      {location.pathname !== "/login" &&
-       location.pathname !== "/signup" && <Header />}
+      {/* ✅ GLOBAL HEADER */}
+      <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,7 +25,6 @@ function App() {
         )}
         <Route path="*" element={<NotFound />} />
       </Routes>
-
     </main>
   );
 }
