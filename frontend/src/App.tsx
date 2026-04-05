@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 // @ts-ignore
 import './App.css'
 import { useAuth } from './context/AuthContext'
@@ -10,18 +10,28 @@ import Signup from './pages/Signup'
 import NotFound from './pages/NotFound'
 
 function App() {
- const auth= useAuth();
-  return ( 
-  <main>
-    <Header/>
-    <Routes>
-    <Route path="/" element={<Home/>}/>
-    <Route path="/login" element={<Login/>}/>
-    <Route path="/signup" element={<Signup/>}/>
-    {auth?.isLoggedIn && auth.user && (<Route path="/chat" element={<Chat />} />)}
-    <Route path="*" element={<NotFound/>}/>
-  </Routes>  </main>); 
+  const auth = useAuth();
+  const location = useLocation();
 
-} 
+  return (
+    <main>
+      
+      {/* 🔥 HIDE HEADER ON LOGIN & SIGNUP */}
+      {location.pathname !== "/login" &&
+       location.pathname !== "/signup" && <Header />}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        {auth?.isLoggedIn && auth.user && (
+          <Route path="/chat" element={<Chat />} />
+        )}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+    </main>
+  );
+}
 
 export default App;
