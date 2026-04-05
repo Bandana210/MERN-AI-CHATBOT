@@ -36,7 +36,19 @@ useEffect(()=> {
 },[auth?.user]);
 
   return (
-  <Box display="flex" width="100%" height="100vh">
+  <Box display="flex" width="100%" height="100vh" 
+  sx={{
+    minHeight: "100vh",
+    overflow: "hidden",
+    backgroundColor: "#020617",
+    backgroundImage: `
+      radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+    `,
+    backgroundSize: "auto, auto, 40px 40px, 40px 40px",
+  }}>
 
     {/* LEFT SIDE */}
     <Box
@@ -45,8 +57,7 @@ useEffect(()=> {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      sx={{ backgroundColor: "#020617" }}
-    >
+      >
       <img
         src="/airobot2.png"
         alt="Robot"
@@ -68,8 +79,7 @@ useEffect(()=> {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      sx={{ backgroundColor: "#020617" }}
-    >
+      >
       <form
         onSubmit={handleSubmit}
         style={{

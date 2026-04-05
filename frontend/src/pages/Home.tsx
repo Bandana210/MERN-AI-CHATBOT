@@ -18,111 +18,89 @@ const Home = () => {
     <Box
       width="100%"
       minHeight="100vh"
-      overflowX="hidden"
       sx={{
-        px: { xs: 2, md: 6 },
-        py: 4,
+        overflowX: "hidden",
+        backgroundColor: "#020617",
+        backgroundImage: `
+    radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+  `,
+        backgroundSize: "auto, auto, 40px 40px, 40px 40px",
       }}
     >
-      {/* HERO SECTION */}
+      {/* HERO */}
       <Box
         sx={{
-          maxWidth: "1400px",
-          mx: "auto",
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 6,
-          mt: 6,
-        }}
-      >
-        {/* LEFT HERO */}
-        <Box flex={1}>
-          <Box
-            sx={{
-              fontFamily: "'Poppins', sans-serif",
-              fontWeight: 500,
-              fontSize: { xs: "2.5rem", md: "4rem" },
-              lineHeight: 1.1,
-              mb: 3,
-            }}
-          >
-            <TypingAnim />
-          </Box>
-
-          <Typography
-            variant="h6"
-            sx={{
-              color: "gray",
-              mb: 4,
-              maxWidth: "600px",
-            }}
-          >
-            Automate conversations, improve user engagement,
-            and provide instant responses with your intelligent AI assistant.
-          </Typography>
-
-          <Button
-            variant="contained"
-            onClick={() => navigate("/signup")}
-            sx={{
-              px: 4,
-              py: 1.5,
-              borderRadius: 3,
-              bgcolor: "#00fffc",
-              color: "black",
-              fontWeight: 600,
-              ":hover": {
-                bgcolor: "white",
-              },
-            }}
-          >
-            Start for Free
-          </Button>
-        </Box>
-
-        {/* RIGHT IMAGE */}
-        <Box
-  flex={1}
-  sx={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }}
->
-                  <Box
-                      sx={{
-                          p: 2,
-                          borderRadius: 4,
-                          background: "rgba(15, 23, 42, 0.6)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          boxShadow: "0 0 60px rgba(0,255,252,0.12)",
-                          backdropFilter: "blur(8px)",
-                      }}
-                  >
-                      <img
-                          src="/hero-photo.jpg"
-                          alt="chatbot"
-                          style={{
-                              width: isBelowMd ? "100%" : "500px",
-                              maxWidth: "100%",
-                              borderRadius: "18px",
-                              display: "block",
-                          }}
-                      />
-                  </Box>
-              </Box>
-      </Box>
-
-      {/* STACKED SECTIONS */}
-      <Box
-        sx={{
-          mt: 12,
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          gap: 10,
-          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          px: { xs: 3, md: 8 },
+          py: 8,
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: { xs: "3rem", md: "6rem" },
+            fontWeight: 100,
+            lineHeight: 1.05,
+            color: "white",
+            fontFamily: "'Poppins', sans-serif",
+            mb: 3,
+            maxWidth: "1100px",
+          }}
+        >
+          Build the next generation
+          <br />
+          of AI conversations.
+        </Typography>
+
+        <Typography
+          sx={{
+            fontSize: { xs: "1rem", md: "1.4rem" },
+            color: "rgba(255,255,255,0.65)",
+            maxWidth: "800px",
+            mb: 5,
+            lineHeight: 1.6,
+          }}
+        >
+          ChatBro helps automate support, improve engagement,
+          and deliver intelligent customer conversations instantly.
+        </Typography>
+
+        <Button
+          variant="contained"
+          onClick={() => navigate("/signup")}
+          sx={{
+            px: 5,
+            py: 1.5,
+            borderRadius: "30px",
+            bgcolor: "#00fffc",
+            color: "black",
+            fontWeight: 700,
+            fontSize: "1rem",
+            mb: 10,
+            ":hover": {
+              bgcolor: "white",
+            },
+          }}
+        >
+          Start Free Trial
+        </Button>
+      </Box>
+
+      {/* MAIN STACKED CONTENT */}
+      <Box
+        sx={{
+          px: { xs: 2, md: 6 },
+          pb: 8,
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
           maxWidth: "1400px",
           mx: "auto",
         }}
@@ -136,11 +114,11 @@ const Home = () => {
             background: "#07111f",
           }}
         >
-          <Typography variant="h3" fontWeight={700} mb={2}>
+          <Typography variant="h3" fontWeight={200} mb={2}>
             Features
           </Typography>
 
-          <Typography variant="h6" color="gray" mb={3}>
+          <Typography variant="h6" color="gray" mb={4}>
             Instant AI-powered responses with smart context understanding.
           </Typography>
 
@@ -149,38 +127,36 @@ const Home = () => {
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
-                sm: "repeat(2, minmax(0, 1fr))",
-                lg: "repeat(3, minmax(0, 1fr))",
+                sm: "repeat(2, 1fr)",
+                lg: "repeat(3, 1fr)",
               },
               gap: 3,
-              mt: 4,
-              width: "100%",
             }}
           >
             {[
               {
                 title: "Instant Replies",
-                desc: "Respond to users instantly with AI-powered chat assistance.",
+                desc: "Respond instantly with AI-powered assistance.",
               },
               {
                 title: "Smart Context",
-                desc: "Maintains conversation flow and remembers user intent.",
+                desc: "Maintains flow and remembers user intent.",
               },
               {
                 title: "24/7 Support",
-                desc: "Provide round-the-clock customer service automation.",
+                desc: "Round-the-clock customer service automation.",
               },
               {
                 title: "Secure Data",
-                desc: "Encrypted communication and secure session handling.",
+                desc: "Encrypted communication and session security.",
               },
               {
                 title: "Fast Integration",
-                desc: "Quickly plug into your MERN stack application.",
+                desc: "Quickly plug into MERN applications.",
               },
               {
                 title: "Scalable",
-                desc: "Built to support thousands of simultaneous users.",
+                desc: "Supports thousands of simultaneous users.",
               },
             ].map((card, index) => (
               <Box
@@ -190,19 +166,12 @@ const Home = () => {
                   borderRadius: 3,
                   background: "#0f172a",
                   border: "1px solid rgba(255,255,255,0.08)",
-                  transition: "0.3s",
-                  ":hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: "0 0 30px rgba(0,255,252,0.12)",
-                  },
                 }}
               >
-                <Typography variant="h5" fontWeight={600} mb={1}>
+                <Typography variant="h5" fontWeight={200} mb={1}>
                   {card.title}
                 </Typography>
-                <Typography variant="body1" color="gray">
-                  {card.desc}
-                </Typography>
+                <Typography color="gray">{card.desc}</Typography>
               </Box>
             ))}
           </Box>
@@ -217,11 +186,11 @@ const Home = () => {
             background: "#07111f",
           }}
         >
-          <Typography variant="h3" fontWeight={700} mb={2}>
+          <Typography variant="h3" fontWeight={200} mb={2}>
             Pricing
           </Typography>
 
-          <Typography variant="h6" color="gray" mb={3}>
+          <Typography variant="h6" color="gray" mb={4}>
             Flexible plans for startups and enterprise teams.
           </Typography>
 
@@ -230,28 +199,26 @@ const Home = () => {
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
-                md: "repeat(3, minmax(0, 1fr))",
+                md: "repeat(3, 1fr)",
               },
               gap: 3,
-              mt: 4,
-              width: "100%",
             }}
           >
             {[
               {
                 plan: "Basic",
                 price: "Free",
-                desc: "Perfect for testing and personal use.",
+                desc: "Perfect for personal use.",
               },
               {
                 plan: "Pro",
                 price: "₹499/mo",
-                desc: "Best for projects and small teams.",
+                desc: "Best for projects and teams.",
               },
               {
                 plan: "Enterprise",
                 price: "Custom",
-                desc: "Advanced integrations and scale support.",
+                desc: "Advanced support and integrations.",
               },
             ].map((card, index) => (
               <Box
@@ -260,29 +227,16 @@ const Home = () => {
                   p: 4,
                   borderRadius: 3,
                   background: "#0f172a",
-                  border: "1px solid rgba(255,255,255,0.08)",
                   textAlign: "center",
-                  transition: "0.3s",
-                  ":hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: "0 0 30px rgba(0,255,252,0.12)",
-                  },
                 }}
               >
-                <Typography variant="h4" fontWeight={700} mb={1}>
+                <Typography variant="h4" fontWeight={200}>
                   {card.plan}
                 </Typography>
-
-                <Typography
-                  variant="h5"
-                  sx={{ color: "#00fffc", mb: 2 }}
-                >
+                <Typography variant="h5" sx={{ color: "#00fffc", my: 2 }}>
                   {card.price}
                 </Typography>
-
-                <Typography color="gray">
-                  {card.desc}
-                </Typography>
+                <Typography color="gray">{card.desc}</Typography>
               </Box>
             ))}
           </Box>
@@ -295,15 +249,14 @@ const Home = () => {
             p: 4,
             borderRadius: 4,
             background: "#07111f",
-            mb: 10,
           }}
         >
-          <Typography variant="h3" fontWeight={700} mb={2}>
+          <Typography variant="h3" fontWeight={200} mb={2}>
             About Us
           </Typography>
 
           <Typography variant="h6" color="gray" mb={4}>
-            Built to automate conversations and improve customer support.
+            Built to automate conversations and improve support.
           </Typography>
 
           <Box
@@ -313,18 +266,11 @@ const Home = () => {
                 xs: "1fr",
                 md: "1fr 1fr",
               },
-              gap: 4,
+              gap: 3,
             }}
           >
-            <Box
-              sx={{
-                p: 4,
-                borderRadius: 3,
-                background: "#0f172a",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              <Typography variant="h5" fontWeight={600} mb={2}>
+            <Box sx={{ p: 4, borderRadius: 3, background: "#0f172a" }}>
+              <Typography variant="h5" fontWeight={200} mb={2}>
                 Contact
               </Typography>
               <Typography color="gray">support@chatbro.ai</Typography>
@@ -332,19 +278,12 @@ const Home = () => {
               <Typography color="gray">Bengaluru, India</Typography>
             </Box>
 
-            <Box
-              sx={{
-                p: 4,
-                borderRadius: 3,
-                background: "#0f172a",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              <Typography variant="h5" fontWeight={600} mb={2}>
+            <Box sx={{ p: 4, borderRadius: 3, background: "#0f172a" }}>
+              <Typography variant="h5" fontWeight={200} mb={2}>
                 Mission
               </Typography>
               <Typography color="gray">
-                We build intelligent chatbot systems for modern customer support.
+                Building modern AI support systems for real businesses.
               </Typography>
             </Box>
           </Box>
