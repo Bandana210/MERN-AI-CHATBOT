@@ -13,8 +13,9 @@ function App() {
 
   return (
     <main>
-      {/* ✅ GLOBAL HEADER */}
-      <Header />
+      
+      {location.pathname !== "/login" &&
+      location.pathname !== "/signup" && <Header />}
 
       <Routes>
         <Route path="/" element={<Home />} />
