@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box,useTheme,useMediaQuery} from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import TypingAnim from "../components/typer/TypingAnim";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <Box width={"100%"} height={'100%'}>
             <Box sx={{ display: 'flex', width: "100%", flexDirection: { md: "row", xs: "column", sm: "column" }, alignItems: "center", mx: "auto", mt: 3, }}>
-                <Box><TypingAnim/></Box>
+              <Box><TypingAnim/></Box>
                 <Box sx={{ display: "flex", width: "100%", mx: "auto" }}>
                     <img
                         src="/chat.png"
