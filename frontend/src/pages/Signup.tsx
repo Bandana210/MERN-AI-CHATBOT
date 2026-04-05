@@ -6,7 +6,7 @@ import CustomisedInput from '../components/shared/CustomisedInput';
 import { toast } from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
 import {useNavigate} from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 const Signup = () => {
   const navigate=useNavigate();
@@ -29,7 +29,7 @@ const Signup = () => {
 };
     useEffect(()=> {
     if (auth?.user){
-        return navigate("/chat");
+        navigate("/chat");
     }},[auth]);
 
     
