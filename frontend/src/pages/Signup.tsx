@@ -6,6 +6,7 @@ import CustomisedInput from '../components/shared/CustomisedInput';
 import { toast } from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
 import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 
 
 const Signup = () => {
@@ -29,64 +30,93 @@ const Signup = () => {
 };
     useEffect(()=> {
     if (auth?.user){
-        return navigate("/chat");
-    }},[auth]);
+      navigate("/chat");
+    }},[auth?.user]);
 
     
   return (
-    <Box width={"100%"} height={"100vh"} display="flex" flex={1}>
-      <Box
-        padding={8}
-        mt={8}
-        sx={{ display:"flex"}}
-      >
-        <img src="/airobot.png" alt="Robot" style={{width:"400px"}} />
-      </Box>
-      <Box display={'flex'} 
-      justifyContent={'center'} 
-      alignItems={'center'}
-      ml={'aut'}
-      mt={16}
-      >
-        <form
+  <Box
+    width="100%"
+    height="100vh"
+    display="flex"
+    alignItems="center"
+    justifyContent="space-evenly"
+    px={4}
+  >
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src="/airobot2.png"
+        alt="Robot"
+        style={{ width: "400px" }}
+      />
+    </Box>
+
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <form
         onSubmit={handleSubmit}
         style={{
-        margin: "auto",
-        padding: "30px",
-        boxShadow: "10px 10px 20px rgba(0,0,0,0.2)",
-        borderRadius: "10px",
-        border: "none",
-        }}>
-                <Box sx={{display:"flex",
-                    flexDirection:'column',
-                    justifyContent:'center',
-                    }}>
-                    <Typography variant="h4"
-                     textAlign='center'
-                     padding={2}
-                     fontWeight={600}
-                     >Signup
-                    </Typography> 
-                    <CustomisedInput type="text" name="name" label="Name" />
-                    <CustomisedInput type="email" name="email" label="Email" />
-                    <CustomisedInput type="password" name="password" label="Password" />
-                    <Button type="submit" sx={{px:2,
-                      py:1,
-                      mt:2,
-                      width:"400px",
-                      borderRadius:2,
-                      bgcolor:"#00fffc",
-                      ":hover":{
-                        bgcolor:"white",
-                        color:"black",
-                      }
-                      }}
-                      >Signup</Button>
-                </Box>
-            </form>
-      </Box>
+          padding: "35px",
+          boxShadow: "10px 10px 20px rgba(0,0,0,0.2)",
+          borderRadius: "10px",
+          width: "450px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2.5,
+          }}
+        >
+          <Typography
+            variant="h4"
+            textAlign="center"
+            fontWeight={600}
+          >
+            Signup
+          </Typography>
+
+          <CustomisedInput type="text" name="name" label="Name" />
+          <CustomisedInput type="email" name="email" label="Email" />
+          <CustomisedInput
+            type="password"
+            name="password"
+            label="Password"
+          />
+
+          <Button
+            type="submit"
+            sx={{
+              px: 2,
+              py: 1,
+              mt: 1,
+              width: "100%",
+              maxWidth: "400px",
+              borderRadius: 2,
+              bgcolor: "#00fffc",
+              ":hover": {
+                bgcolor: "white",
+                color: "black",
+              },
+            }}
+          >
+            Signup
+          </Button>
+        </Box>
+      </form>
     </Box>
-  );
+  </Box>
+);
 };
 
 export default Signup;
