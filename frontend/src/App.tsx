@@ -16,9 +16,8 @@ function App() {
   return (
     <main>
       
-      {/* 🔥 HIDE HEADER ON LOGIN & SIGNUP */}
       {location.pathname !== "/login" &&
-       location.pathname !== "/signup" && <Header />}
+      location.pathname !== "/signup" && <Header />}
 
       <Routes>
         <Route path="/" element={<Home />} />
