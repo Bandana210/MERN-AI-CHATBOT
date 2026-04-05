@@ -3,7 +3,7 @@ import { connect , disconnect } from "mongoose";
 async function connectToDatabase(){
     try {
        // console.log("MONGODB_URL:", process.env.MONGODB_URL);
-        await connect(process.env.MONGODB_URL);
+        await connect(process.env.MONGODB_URL as string);
         console.log("Connected to mongodb");
     }
     catch (error) {

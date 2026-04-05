@@ -1,10 +1,74 @@
-import React from 'react';
-import {Box,Avatar,Typography, Button} from "@mui/material";
+import { useState, useRef } from 'react';
+import { useEffect, useLayoutEffect } from "react";
+import {Box,Avatar,Typography, Button,IconButton} from "@mui/material";
 import { red } from '@mui/material/colors';
 import {useAuth} from "../context/AuthContext";
+import ChatItem from '../components/chat/ChatItem';
+import  {IoMdSend} from 'react-icons/io';
+import {useNavigate} from 'react-router-dom';
+import {
+    deleteUserChats,
+    getUserChats,
+    sendChatRequest,
+} from "../helpers/api-communicators";
+import toast from "react-hot-toast";
+
+
+
+type Messages={
+    role: "user" | "assistant";
+    content:string;
+}
+
 const Chat=() => {
+    const navigate =useNavigate();
+    const inputRef= useRef<HTMLInputElement | null>(null);
     const auth= useAuth();
-    return ( <Box sx={{
+    const [chatMessages,setChatMessages] =useState<Messages[]>([]);
+    const handleSubmit = async () => {
+        const content = inputRef.current?.value as string;
+        if (inputRef.current) {
+            inputRef.current.value = "";
+        }
+        const newMessage: Messages = { role: "user", content };
+        setChatMessages(prev => [...prev, newMessage]);
+
+        const chatData= await sendChatRequest(content)
+        setChatMessages([...chatData.chats]);
+        //
+    };
+    const handleDeleteChats= async()=>{
+        try {
+            toast.loading("Deleting Chats",{id: "deletechats"});
+            await deleteUserChats();
+            setChatMessages([]);
+            toast.success("Deleted Chats Successfully",{id: "deletechats"});
+        } catch(error) {
+            console.log(error);
+            toast.error("Deleting Chats Failed",{id: "deletechats"});
+        }
+    }
+
+    useLayoutEffect(() => {
+        if (auth?.isLoggedIn && auth.user){
+            toast.loading("Loading Chats",{id: "laodchats"});
+            getUserChats().then((data) => {
+                setChatMessages([...data.chats]);
+                toast.loading("Successfully Loaded Chats",{id: "laodchats"});
+            }).catch(err => {
+                console.log(err);
+                toast.error("Loading Failed", {id:"loadchats"})
+        });
+        }
+    },[auth]);
+    useEffect(() => {
+        if (!auth?.user) {
+        navigate("/login");
+        }
+    }, [auth]);
+
+    return (
+        <Box sx={{
         display:'flex',
         flex:1,
         width:'100%',
@@ -33,7 +97,8 @@ const Chat=() => {
             </Avatar>
             <Typography sx={{mx:'auto',fontFamily:"work sans"}}>You are talking to a ChatBot.</Typography>
             <Typography sx={{mx:'auto',fontFamily:"work sans",my:4,p:3}}>You are talking to a ChatBot.</Typography>
-            <Button sx={{width:"200px", my:'auto',color:'white',fontWeight:'700',borderRadius:3,mx:'auto',bgcolor:red[300], ":hover":{bgcolor: red.A400}}}>Clear Conversation!</Button>
+            <Button onClick={handleDeleteChats}
+            sx={{width:"200px", my:'auto',color:'white',fontWeight:'700',borderRadius:3,mx:'auto',bgcolor:red[300], ":hover":{bgcolor: red.A400}}}>Clear Conversation!</Button>
         </Box>
         </Box>
         <Box sx={{display:'flex',flex:{md:0.8,xs:1,sm:1},flexDirection:'column',px:3}}>
@@ -47,7 +112,22 @@ const Chat=() => {
                 overflow:"scroll",
                 overflowX:"hidden",
                 overflowY:"auto",
-                scrollBehavior:"smooth"}}></Box>
+                scrollBehavior:"smooth"}}>
+                    {chatMessages.map((chat,index)=> (
+                        //@ts-ignore
+                        <ChatItem content={chat.content} role={chat.role} key={index}/>
+                    ))}
+                </Box>
+                <div style={{width:"100%", padding:"20px", borderRadius:8, backgroundColor:"rgb(17,27,39)", display:"flex", margin:"auto"}}>
+                {" "} 
+            <input ref={inputRef} type="text" style={{width: "100%",backgroundColor:"transparent",padding:"10px", borderRadius:"none",outline:"none",color:"white",fontSize:"20px",}}/>   
+            <IconButton onClick={handleSubmit} sx={{
+                ml: "auto",
+                color:"white",
+            }}
+            ><IoMdSend/></IconButton>
+            </div>
+
         </Box>
         </Box>
     );

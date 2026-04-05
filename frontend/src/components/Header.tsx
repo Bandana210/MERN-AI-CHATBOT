@@ -15,10 +15,10 @@ const Header=() => {
             <div>
                 {auth.isLoggedIn ? <>
                     <NavigationLink to="/chat" text="Go to chat" bg="lightgray" textColor="black" />
-                    <NavigationLink to="/home" text="Logout" bg="lightgray" textColor="black" onClick={() => auth.logout()} />
+                    <NavigationLink to="/home" text="Logout" bg="lightgray" textColor="white" onClick={() => auth.logout()} />
                 </> :<>
                     <NavigationLink to="/login" text="Login" bg="lightgray" textColor="black" />
-                    <NavigationLink to="/signup" text="Signup" bg="lightgray" textColor="black" />
+                    <NavigationLink to="/signup" text="Signup" bg="lightgray" textColor="white" />
                 </> }
             </div>
         </Toolbar>

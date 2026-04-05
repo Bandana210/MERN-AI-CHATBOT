@@ -1,4 +1,5 @@
 import React from 'react';
+import {useEffect} from 'react';
 import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
@@ -28,6 +29,12 @@ const Login = () => {
 
   console.log(email, password);
 };
+useEffect(()=> {
+  if(auth?.user){
+    navigate("/chat");
+  }
+},[auth?.user]);
+
   return (
     <Box width={"100%"} height={"100vh"} display="flex" flex={1}>
       <Box
