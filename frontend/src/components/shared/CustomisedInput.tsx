@@ -17,8 +17,10 @@ const CustomisedInput = (props: Props) => {
 
   return (
     <TextField
+      fullWidth
       sx={{
-        width: "400px",
+        width: { xs: "100%", sm: "400px" },
+        maxWidth: "400px",
         "& .MuiOutlinedInput-root": {
           borderRadius: "10px",
           color: "white",

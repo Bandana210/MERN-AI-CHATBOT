@@ -3,13 +3,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import NavigationLink from "./shared/NavigationLink";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom"; // ✅ NEW
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const auth = useAuth();
-  const navigate = useNavigate(); // ✅ NEW
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
@@ -39,22 +38,23 @@ const Header = () => {
     >
       <Toolbar
         sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr auto 1fr",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
           alignItems: "center",
-          px: 4,
-          py: 1,
+          gap: { xs: 2, md: 0 },
+          px: { xs: 2, md: 4 },
+          py: 1.5,
         }}
       >
-        {/* LEFT (CLICKABLE LOGO) */}
+        {/* LEFT */}
         <Box
-          onClick={() => navigate("/")} // ✅ MAIN CHANGE
+          onClick={() => navigate("/")}
           sx={{
             display: "flex",
             alignItems: "center",
             gap: 1.5,
-            justifySelf: "start",
-            cursor: "pointer", // ✅ UX
+            cursor: "pointer",
           }}
         >
           <img
@@ -71,7 +71,7 @@ const Header = () => {
           <Typography
             sx={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: "2rem",
+              fontSize: { xs: "1.5rem", md: "2rem" },
               fontWeight: 700,
               color: "white",
               letterSpacing: "0.5px",
@@ -86,8 +86,9 @@ const Header = () => {
           <Box
             sx={{
               display: "flex",
-              gap: 4,
-              justifySelf: "center",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: { xs: 2, md: 4 },
             }}
           >
             <Typography
@@ -118,7 +119,8 @@ const Header = () => {
           sx={{
             display: "flex",
             gap: 2,
-            justifySelf: "end",
+            flexWrap: "wrap",
+            justifyContent: "center",
           }}
         >
           {auth?.isLoggedIn ? (
@@ -137,7 +139,7 @@ const Header = () => {
             <>
               <Button
                 variant="contained"
-                onClick={() => (window.location.href = "/login")}
+                onClick={() => navigate("/login")}
                 sx={{
                   bgcolor: "#00fffc",
                   color: "black",
@@ -149,7 +151,7 @@ const Header = () => {
 
               <Button
                 variant="contained"
-                onClick={() => (window.location.href = "/signup")}
+                onClick={() => navigate("/signup")}
                 sx={{
                   bgcolor: "#00fffc",
                   color: "black",
