@@ -1,155 +1,182 @@
 import React from 'react';
-import { Typography } from "@mui/material";
-import { Box } from "@mui/material";
-import { Button } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import CustomisedInput from '../components/shared/CustomisedInput';
 import { toast } from 'react-hot-toast';
 import { useAuth } from "../context/AuthContext";
-import {useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Signup = () => {
-  const navigate=useNavigate();
-  const auth= useAuth()
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const navigate = useNavigate();
+  const auth = useAuth();
 
-  try{
-    toast.loading("Signing Up",{id:"signup"});
-    await auth?.signup(name,email,password);
-    toast.success("Signed Up Successfully",{id: "signup"});
-  } catch(error){
-    console.log(error);
-    toast.error("Signing Up Failed",{id: "signup"});
-  }
-};
-    useEffect(()=> {
-    if (auth?.user){
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      toast.loading("Signing Up", { id: "signup" });
+      await auth?.signup(name, email, password);
+      toast.success("Signed Up Successfully", { id: "signup" });
+    } catch (error) {
+      console.log(error);
+      toast.error("Signing Up Failed", { id: "signup" });
+    }
+  };
+
+  useEffect(() => {
+    if (auth?.user) {
       navigate("/chat");
-    }},[auth?.user]);
+    }
+  }, [auth?.user]);
 
-    
   return (
-  <Box position="relative" width="100%" height="100vh"
-  sx={{
-    minHeight: "100vh",
-    overflow: "hidden",
-    backgroundColor: "#020617",
-    backgroundImage: `
-      radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
-      radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-    `,
-    backgroundSize: "auto, auto, 40px 40px, 40px 40px",
-  }}>
-
-    {/* TOP LEFT LOGO */}
     <Box
-      position="absolute"
-      top={20}
-      left={30}
-      display="flex"
-      alignItems="center"
-      gap={1.5}
+      position="relative"
+      width="100%"
+      height="100vh"
+      sx={{
+        minHeight: "100vh",
+        overflow: "hidden",
+        backgroundColor: "#020617",
+        backgroundImage: `
+          radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: "auto, auto, 40px 40px, 40px 40px",
+      }}
     >
-      <img
-        src="/logo.jpeg"
-        alt="logo"
-        style={{ width: "45px", height: "45px", objectFit: "contain" }}
-      />
-
-      <Typography
-        variant="h5"
-        fontWeight={700}
-        color="white"
-        sx={{ letterSpacing: "1px" }}
-      >
-        ChatBro
-      </Typography>
-    </Box>
-
-    <Box display="flex" width="100%" height="100%">
-
-      {/* LEFT */}
+      {/* TOP LEFT LOGO */}
       <Box
-        flex={1}
+        position="absolute"
+        top={20}
+        left={30}
         display="flex"
-        flexDirection="column"
-        justifyContent="center"
         alignItems="center"
+        gap={1.5}
+        onClick={() => navigate("/")}
+        sx={{
+          cursor: "pointer",
+          transition: "0.2s",
+          "&:hover": {
+            opacity: 0.85,
+          },
+        }}
       >
         <img
-          src="/airobot2.png"
-          alt="Robot"
-          style={{ width: "300px", marginBottom: "20px" }}
+          src="/logo.jpeg"
+          alt="logo"
+          style={{ width: "45px", height: "45px", objectFit: "contain" }}
         />
 
-        <Typography variant="h4" color="white" fontWeight={600}>
-          Join ChatBro
-        </Typography>
-
-        <Typography variant="body1" color="gray">
-          Create your account
+        <Typography
+          variant="h5"
+          fontWeight={700}
+          color="white"
+          sx={{ letterSpacing: "1px" }}
+        >
+          ChatBro
         </Typography>
       </Box>
 
-      {/* RIGHT */}
-      <Box
-        flex={1}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            width: "400px",
-            padding: "40px",
-            borderRadius: "12px",
-            background: "#0f172a",
-            boxShadow: "0px 10px 30px rgba(0,0,0,0.5)",
-          }}
+      <Box display="flex" width="100%" height="100%">
+        {/* LEFT */}
+        <Box
+          flex={1}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
         >
-          <Box display="flex" flexDirection="column" gap={3}>
-            <Typography
-              variant="h4"
-              textAlign="center"
-              fontWeight={600}
-              color="white"
-            >
-              Signup
-            </Typography>
+          <img
+            src="/airobot2.png"
+            alt="Robot"
+            style={{ width: "300px", marginBottom: "20px" }}
+          />
 
-            <CustomisedInput type="text" name="name" label="Name" />
-            <CustomisedInput type="email" name="email" label="Email" />
-            <CustomisedInput type="password" name="password" label="Password" />
+          <Typography variant="h4" color="white" fontWeight={600}>
+            Join ChatBro
+          </Typography>
 
-            <Button
-              type="submit"
-              sx={{
-                py: 1.5,
-                borderRadius: 2,
-                bgcolor: "#00fffc",
-                fontWeight: 600,
-                ":hover": {
-                  bgcolor: "#00cfcf",
-                },
-              }}
-            >
-              Signup
-            </Button>
-          </Box>
-        </form>
+          <Typography variant="body1" color="gray">
+            Create your account
+          </Typography>
+        </Box>
+
+        {/* RIGHT */}
+        <Box
+          flex={1}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              width: "400px",
+              padding: "40px",
+              borderRadius: "12px",
+              background: "#0f172a",
+              boxShadow: "0px 10px 30px rgba(0,0,0,0.5)",
+            }}
+          >
+            <Box display="flex" flexDirection="column" gap={3}>
+              <Typography
+                variant="h4"
+                textAlign="center"
+                fontWeight={600}
+                color="white"
+              >
+                Signup
+              </Typography>
+
+              <CustomisedInput type="text" name="name" label="Name" />
+              <CustomisedInput type="email" name="email" label="Email" />
+              <CustomisedInput type="password" name="password" label="Password" />
+
+              <Button
+                type="submit"
+                sx={{
+                  py: 1.5,
+                  borderRadius: 2,
+                  bgcolor: "#00fffc",
+                  fontWeight: 600,
+                  ":hover": {
+                    bgcolor: "#00cfcf",
+                  },
+                }}
+              >
+                Signup
+              </Button>
+
+              <Typography
+                variant="body2"
+                textAlign="center"
+                color="gray"
+              >
+                Already have an account?{" "}
+                <span
+                  style={{
+                    color: "#00fffc",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </span>
+              </Typography>
+            </Box>
+          </form>
+        </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
 };
 
 export default Signup;
