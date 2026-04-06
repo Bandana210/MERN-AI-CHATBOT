@@ -1,16 +1,18 @@
-import React from 'react';
+import React from "react";
 import { Typography, Box, Button } from "@mui/material";
-import CustomisedInput from '../components/shared/CustomisedInput';
-import { toast } from 'react-hot-toast';
+import CustomisedInput from "../components/shared/CustomisedInput";
+import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
@@ -35,11 +37,11 @@ const Signup = () => {
 
   return (
     <Box
-      position="relative"
       width="100%"
-      height="100vh"
+      minHeight="100vh"
       sx={{
-        minHeight: "100vh",
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
         overflow: "hidden",
         backgroundColor: "#020617",
         backgroundImage: `
@@ -63,6 +65,7 @@ const Signup = () => {
         sx={{
           cursor: "pointer",
           transition: "0.2s",
+          zIndex: 10,
           "&:hover": {
             opacity: 0.85,
           },
@@ -71,7 +74,11 @@ const Signup = () => {
         <img
           src="/logo.jpeg"
           alt="logo"
-          style={{ width: "45px", height: "45px", objectFit: "contain" }}
+          style={{
+            width: "45px",
+            height: "45px",
+            objectFit: "contain",
+          }}
         />
 
         <Typography
@@ -84,96 +91,130 @@ const Signup = () => {
         </Typography>
       </Box>
 
-      <Box display="flex" width="100%" height="100%">
-        {/* LEFT */}
-        <Box
-          flex={1}
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
+      {/* LEFT */}
+      <Box
+        flex={1}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          py: { xs: 12, md: 0 },
+          px: 2,
+        }}
+      >
+        <img
+          src="/airobot2.png"
+          alt="Robot"
+          style={{
+            width: "300px",
+            maxWidth: "80%",
+            marginBottom: "20px",
+          }}
+        />
+
+        <Typography
+          variant="h4"
+          color="white"
+          fontWeight={600}
+          textAlign="center"
         >
-          <img
-            src="/airobot2.png"
-            alt="Robot"
-            style={{ width: "300px", marginBottom: "20px" }}
-          />
+          Join ChatBro
+        </Typography>
 
-          <Typography variant="h4" color="white" fontWeight={600}>
-            Join ChatBro
-          </Typography>
-
-          <Typography variant="body1" color="gray">
-            Create your account
-          </Typography>
-        </Box>
-
-        {/* RIGHT */}
-        <Box
-          flex={1}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
+        <Typography
+          variant="body1"
+          color="gray"
+          textAlign="center"
         >
-          <form
-            onSubmit={handleSubmit}
-            style={{
-              width: "400px",
-              padding: "40px",
-              borderRadius: "12px",
-              background: "#0f172a",
-              boxShadow: "0px 10px 30px rgba(0,0,0,0.5)",
-            }}
-          >
-            <Box display="flex" flexDirection="column" gap={3}>
-              <Typography
-                variant="h4"
-                textAlign="center"
-                fontWeight={600}
-                color="white"
-              >
-                Signup
-              </Typography>
+          Create your account
+        </Typography>
+      </Box>
 
-              <CustomisedInput type="text" name="name" label="Name" />
-              <CustomisedInput type="email" name="email" label="Email" />
-              <CustomisedInput type="password" name="password" label="Password" />
+      {/* RIGHT */}
+      <Box
+        flex={1}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          px: 2,
+          pb: { xs: 6, md: 0 },
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            width: "100%",
+            maxWidth: "400px",
+            padding: "40px",
+            borderRadius: "12px",
+            background: "#0f172a",
+            boxShadow: "0px 10px 30px rgba(0,0,0,0.5)",
+          }}
+        >
+          <Box display="flex" flexDirection="column" gap={3}>
+            <Typography
+              variant="h4"
+              textAlign="center"
+              fontWeight={600}
+              color="white"
+            >
+              Signup
+            </Typography>
 
-              <Button
-                type="submit"
-                sx={{
-                  py: 1.5,
-                  borderRadius: 2,
-                  bgcolor: "#00fffc",
-                  fontWeight: 600,
-                  ":hover": {
-                    bgcolor: "#00cfcf",
-                  },
+            <CustomisedInput
+              type="text"
+              name="name"
+              label="Name"
+            />
+
+            <CustomisedInput
+              type="email"
+              name="email"
+              label="Email"
+            />
+
+            <CustomisedInput
+              type="password"
+              name="password"
+              label="Password"
+            />
+
+            <Button
+              type="submit"
+              sx={{
+                py: 1.5,
+                borderRadius: 2,
+                bgcolor: "#00fffc",
+                fontWeight: 600,
+                ":hover": {
+                  bgcolor: "#00cfcf",
+                },
+              }}
+            >
+              Signup
+            </Button>
+
+            <Typography
+              variant="body2"
+              textAlign="center"
+              color="gray"
+            >
+              Already have an account?{" "}
+              <span
+                style={{
+                  color: "#00fffc",
+                  fontWeight: 500,
+                  cursor: "pointer",
                 }}
+                onClick={() => navigate("/login")}
               >
-                Signup
-              </Button>
-
-              <Typography
-                variant="body2"
-                textAlign="center"
-                color="gray"
-              >
-                Already have an account?{" "}
-                <span
-                  style={{
-                    color: "#00fffc",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => navigate("/login")}
-                >
-                  Login
-                </span>
-              </Typography>
-            </Box>
-          </form>
-        </Box>
+                Login
+              </span>
+            </Typography>
+          </Box>
+        </form>
       </Box>
     </Box>
   );

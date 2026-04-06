@@ -22,11 +22,11 @@ const Home = () => {
         overflowX: "hidden",
         backgroundColor: "#020617",
         backgroundImage: `
-    radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-  `,
+          radial-gradient(circle at top left, rgba(0,255,252,0.10), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(0,150,255,0.08), transparent 35%),
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+        `,
         backgroundSize: "auto, auto, 40px 40px, 40px 40px",
       }}
     >
@@ -39,13 +39,13 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
-          px: { xs: 3, md: 8 },
-          py: 8,
+          px: { xs: 2, sm: 3, md: 8 },
+          py: { xs: 6, md: 8 },
         }}
       >
         <Typography
           sx={{
-            fontSize: { xs: "3rem", md: "6rem" },
+            fontSize: { xs: "2.2rem", sm: "3rem", md: "6rem" },
             fontWeight: 100,
             lineHeight: 1.05,
             color: "white",
@@ -76,13 +76,15 @@ const Home = () => {
           variant="contained"
           onClick={() => navigate("/signup")}
           sx={{
-            px: 5,
+            px: { xs: 4, md: 5 },
             py: 1.5,
+            fontSize: { xs: "0.9rem", md: "1rem" },
+            width: { xs: "100%", sm: "auto" },
+            maxWidth: "280px",
             borderRadius: "30px",
             bgcolor: "#00fffc",
             color: "black",
             fontWeight: 700,
-            fontSize: "1rem",
             mb: 10,
             ":hover": {
               bgcolor: "white",
@@ -93,7 +95,7 @@ const Home = () => {
         </Button>
       </Box>
 
-      {/* MAIN STACKED CONTENT */}
+      {/* MAIN */}
       <Box
         sx={{
           px: { xs: 2, md: 6 },
@@ -109,12 +111,18 @@ const Home = () => {
         <Box
           id="features"
           sx={{
-            p: 4,
+            p: { xs: 2.5, md: 4 },
             borderRadius: 4,
             background: "#07111f",
           }}
         >
-          <Typography variant="h3" fontWeight={200} mb={2}>
+          <Typography
+            sx={{
+              fontSize: { xs: "2rem", md: "3rem" },
+              fontWeight: 200,
+              mb: 2,
+            }}
+          >
             Features
           </Typography>
 
@@ -168,7 +176,13 @@ const Home = () => {
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
-                <Typography variant="h5" fontWeight={200} mb={1}>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1.2rem", md: "1.5rem" },
+                    fontWeight: 200,
+                    mb: 1,
+                  }}
+                >
                   {card.title}
                 </Typography>
                 <Typography color="gray">{card.desc}</Typography>
@@ -181,12 +195,18 @@ const Home = () => {
         <Box
           id="pricing"
           sx={{
-            p: 4,
+            p: { xs: 2.5, md: 4 },
             borderRadius: 4,
             background: "#07111f",
           }}
         >
-          <Typography variant="h3" fontWeight={200} mb={2}>
+          <Typography
+            sx={{
+              fontSize: { xs: "2rem", md: "3rem" },
+              fontWeight: 200,
+              mb: 2,
+            }}
+          >
             Pricing
           </Typography>
 
@@ -205,26 +225,14 @@ const Home = () => {
             }}
           >
             {[
-              {
-                plan: "Basic",
-                price: "Free",
-                desc: "Perfect for personal use.",
-              },
-              {
-                plan: "Pro",
-                price: "₹499/mo",
-                desc: "Best for projects and teams.",
-              },
-              {
-                plan: "Enterprise",
-                price: "Custom",
-                desc: "Advanced support and integrations.",
-              },
+              { plan: "Basic", price: "Free", desc: "Perfect for personal use." },
+              { plan: "Pro", price: "₹499/mo", desc: "Best for teams." },
+              { plan: "Enterprise", price: "Custom", desc: "Advanced support." },
             ].map((card, index) => (
               <Box
                 key={index}
                 sx={{
-                  p: 4,
+                  p: { xs: 2.5, md: 4 },
                   borderRadius: 3,
                   background: "#0f172a",
                   textAlign: "center",
@@ -246,12 +254,18 @@ const Home = () => {
         <Box
           id="about"
           sx={{
-            p: 4,
+            p: { xs: 2.5, md: 4 },
             borderRadius: 4,
             background: "#07111f",
           }}
         >
-          <Typography variant="h3" fontWeight={200} mb={2}>
+          <Typography
+            sx={{
+              fontSize: { xs: "2rem", md: "3rem" },
+              fontWeight: 200,
+              mb: 2,
+            }}
+          >
             About Us
           </Typography>
 
