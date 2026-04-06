@@ -5,9 +5,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import NavigationLink from "./shared/NavigationLink";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom"; // ✅ NEW
 
 const Header = () => {
   const auth = useAuth();
+  const navigate = useNavigate(); // ✅ NEW
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
@@ -44,13 +46,15 @@ const Header = () => {
           py: 1,
         }}
       >
-        {/* LEFT */}
+        {/* LEFT (CLICKABLE LOGO) */}
         <Box
+          onClick={() => navigate("/")} // ✅ MAIN CHANGE
           sx={{
             display: "flex",
             alignItems: "center",
             gap: 1.5,
             justifySelf: "start",
+            cursor: "pointer", // ✅ UX
           }}
         >
           <img
