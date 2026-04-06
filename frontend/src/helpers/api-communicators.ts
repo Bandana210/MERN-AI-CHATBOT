@@ -33,11 +33,21 @@ export const logoutUser = async () => {
 };
 
 // UPDATED (IMPORTANT)
-export const sendChatRequest = async (message: string, chatId?: string) => {
-    const res = await axios.post("/chat/new", { message, chatId });
+export const sendChatRequest = async (
+    message: string,
+    chatId?: string,
+    image?: string
+) => {
+    const res = await axios.post("/chat/new", {
+        message,
+        chatId,
+        image   // ✅ NEW
+    });
+
     if(res.status !== 200){
         throw new Error("Unable to send chat ");
     }
+
     return res.data;
 };
 
@@ -71,6 +81,13 @@ export const getChatById = async (chatId: string) => {
     const res = await axios.get(`/chat/session/${chatId}`);
     if (res.status !== 200) {
         throw new Error("Unable to fetch chat");
+    }
+    return res.data;
+};
+export const deleteSingleChat = async (chatId: string) => {
+    const res = await axios.delete(`/chat/session/${chatId}`);
+    if (res.status !== 200) {
+        throw new Error("Unable to delete chat");
     }
     return res.data;
 };
