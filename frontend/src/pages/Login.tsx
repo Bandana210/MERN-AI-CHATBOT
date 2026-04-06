@@ -19,12 +19,12 @@ const Login = () => {
   const password = formData.get("password") as string;
 
   try{
-    toast.loading("Signing In",{id:"login"});
+    toast.loading("Logging In",{id:"login"});
     await auth?.login(email,password);
-    toast.success("Signed In Successfully",{id: "login"});
+    toast.success("Log In Successful",{id: "login"});
   } catch(error){
     console.log(error);
-    toast.error("Signing In Failed",{id: "login"})
+    toast.error("Log In Failed",{id: "login"})
   }
 
   console.log(email, password);
@@ -49,6 +49,39 @@ useEffect(()=> {
     `,
     backgroundSize: "auto, auto, 40px 40px, 40px 40px",
   }}>
+
+    {/* TOP LEFT LOGO */}
+      <Box
+        position="absolute"
+        top={20}
+        left={30}
+        display="flex"
+        alignItems="center"
+        gap={1.5}
+        onClick={() => navigate("/")}
+        sx={{
+          cursor: "pointer",
+          transition: "0.2s",
+          "&:hover": {
+            opacity: 0.85,
+          },
+        }}
+      >
+          <img
+            src="/logo.jpeg"
+            alt="logo"
+            style={{ width: "45px", height: "45px", objectFit: "contain" }}
+          />
+    
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            color="white"
+            sx={{ letterSpacing: "1px" }}
+          >
+            ChatBro
+          </Typography>
+        </Box>
 
     {/* LEFT SIDE */}
     <Box
@@ -104,20 +137,38 @@ useEffect(()=> {
           <CustomisedInput type="email" name="email" label="Email" />
           <CustomisedInput type="password" name="password" label="Password" />
 
-          <Button
-            type="submit"
-            sx={{
-              py: 1.5,
-              borderRadius: 2,
-              bgcolor: "#00fffc",
-              fontWeight: 600,
-              ":hover": {
-                bgcolor: "#00cfcf",
-              },
-            }}
-          >
-            Login
-          </Button>
+            <Button
+              type="submit"
+              sx={{
+                py: 1.5,
+                borderRadius: 2,
+                bgcolor: "#00fffc",
+                fontWeight: 600,
+                ":hover": {
+                  bgcolor: "#00cfcf",
+                },
+              }}
+            >
+              Login
+            </Button>
+
+            <Typography
+              variant="body2"
+              textAlign="center"
+              color="gray"
+              sx={{ cursor: "pointer" }}
+            >
+              Don’t have an account?{" "}
+              <span
+                style={{
+                  color: "#00fffc",
+                  fontWeight: 500,
+                }}
+                onClick={() => navigate("/signup")}
+              >
+                Signup
+              </span>
+</Typography>
 
         </Box>
       </form>
