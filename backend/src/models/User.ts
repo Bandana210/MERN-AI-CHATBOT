@@ -1,51 +1,7 @@
-/*import mongoose from "mongoose";
-import { randomUUID } from 'crypto';
-
-const chatSchema = new mongoose.Schema({
-    id :{
-        type: String,
-        default: randomUUID(),
-    },
-    role :{
-        type:String,
-        required: true,
-    },
-    content:{
-        type:String,
-        required: true,
-    }
-});
-
-const userSchema = new mongoose.Schema({
-    // id automatically from mongodb 
-    name: {
-        type: String ,
-        required: true ,
-    },
-
-    email : {
-        type: String,
-        required: true ,
-        unique: true ,
-    },
-
-    password: {
-        type: String,
-        required: true ,
-
-    },
-
-    chats : [chatSchema],
-});
-
-export default mongoose.model("USer ", userSchema);
-
-*/
-
 import mongoose from "mongoose";
 import { randomUUID } from "crypto";
 
-// message schema
+// 🔥 MESSAGE SCHEMA (UPDATED)
 const messageSchema = new mongoose.Schema({
   role: {
     type: String,
@@ -53,11 +9,15 @@ const messageSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    required: true,
+    required: false, // ✅ allow empty when image only
+  },
+  image: {
+    type: String,
+    required: false, // ✅ NEW FIELD
   },
 });
 
-// chat session schema
+// 🔥 CHAT SESSION SCHEMA (UNCHANGED)
 const chatSessionSchema = new mongoose.Schema({
   chatId: {
     type: String,
@@ -70,6 +30,7 @@ const chatSessionSchema = new mongoose.Schema({
   messages: [messageSchema],
 });
 
+// 🔥 USER SCHEMA (UNCHANGED)
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -87,7 +48,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  chats: [chatSessionSchema], // 🔥 changed
+  chats: [chatSessionSchema],
 });
 
 export default mongoose.model("User", userSchema);

@@ -1,21 +1,5 @@
-/*import { Router } from "express";
-import { verifyToken } from "../utils/token-manager.js";
-import { validate, chatCompletionValidator } from "../utils/validators.js";
-import { deleteChats, generateChatCompletion, sendChatsToUser } from "../controllers/chat-controllers.js";
-
-// Protected API
-const chatRoutes = Router();
-chatRoutes.post("/new", validate(chatCompletionValidator), verifyToken, generateChatCompletion);
-
-chatRoutes.get("/all-chats",verifyToken, sendChatsToUser);
-chatRoutes.delete("/delete",verifyToken, deleteChats);
-
-
-export default chatRoutes;*/
-
 import { Router } from "express";
 import { verifyToken } from "../utils/token-manager.js";
-import { validate, chatCompletionValidator } from "../utils/validators.js";
 import {
   deleteChats,
   generateChatCompletion,
@@ -25,61 +9,84 @@ import User from "../models/User.js";
 
 const chatRoutes = Router();
 
-// ✅ existing routes (UNCHANGED)
+// ✅ SEND MESSAGE (UPDATED - removed validator to allow image)
 chatRoutes.post(
   "/new",
-  validate(chatCompletionValidator),
   verifyToken,
   generateChatCompletion
 );
 
+// ✅ GET ALL CHATS
 chatRoutes.get("/all-chats", verifyToken, sendChatsToUser);
+
+// ✅ DELETE ALL CHATS
 chatRoutes.delete("/delete", verifyToken, deleteChats);
 
-// 🔹 get all chat sessions
+
+// 🔹 GET ALL CHAT SESSIONS
 chatRoutes.get("/sessions", verifyToken, async (req, res) => {
-  const user = await User.findById(res.locals.jwtData.id);
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
 
-  if (!user) {
-    return res.status(401).json({ message: "User not found" });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    return res.json({
+      chats: user.chats.map((c) => ({
+        chatId: c.chatId,
+        title: c.title,
+      })),
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error fetching sessions" });
   }
-
-  return res.json({
-    chats: user.chats.map((c) => ({
-      chatId: c.chatId,
-      title: c.title,
-    })),
-  });
 });
 
-// 🔹 get single chat
+
+// 🔹 GET SINGLE CHAT
 chatRoutes.get("/session/:id", verifyToken, async (req, res) => {
-  const user = await User.findById(res.locals.jwtData.id);
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
 
-  if (!user) {
-    return res.status(401).json({ message: "User not found" });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    const chat = user.chats.find((c) => c.chatId === req.params.id);
+
+    return res.json({ chat });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error fetching chat" });
   }
-
-  const chat = user.chats.find((c) => c.chatId === req.params.id);
-
-  return res.json({ chat });
 });
 
-// 🔹 delete one chat
+
+// 🔹 DELETE SINGLE CHAT
 chatRoutes.delete("/session/:id", verifyToken, async (req, res) => {
-  const user = await User.findById(res.locals.jwtData.id);
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
 
-  if (!user) {
-    return res.status(401).json({ message: "User not found" });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    // remove chat
+    // @ts-ignore
+    user.chats = user.chats.filter((c) => c.chatId !== req.params.id);
+
+    await user.save();
+
+    return res.json({ message: "Deleted" });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error deleting chat" });
   }
-
-  // remove chat
-  // @ts-ignore
-  user.chats = user.chats.filter((c) => c.chatId !== req.params.id);
-
-  await user.save();
-
-  return res.json({ message: "Deleted" });
 });
 
 export default chatRoutes;

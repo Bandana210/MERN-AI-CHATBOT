@@ -143,8 +143,6 @@ const Chat = () => {
             height: "100%",
             overflow: "hidden",
             position: "relative",
-
-            // 🔥 GRADIENT BACKGROUND
             background: `
                 radial-gradient(circle at 20% 20%, rgba(0,255,255,0.08), transparent 40%),
                 radial-gradient(circle at 80% 80%, rgba(0,255,255,0.05), transparent 40%),
@@ -152,7 +150,7 @@ const Chat = () => {
             `
         }}>
 
-            {/* 🔥 GRID OVERLAY */}
+            {/* GRID */}
             <Box sx={{
                 position: "absolute",
                 inset: 0,
@@ -264,7 +262,7 @@ const Chat = () => {
                             textAlign: "center",
                             mb: 1
                         }}>
-                            AI Chat
+                             ChatBro
                         </Typography>
 
                         <Typography sx={{
@@ -272,7 +270,7 @@ const Chat = () => {
                             textAlign: "center",
                             mb: 3
                         }}>
-                            AI Chat is an AI chatbot that writes text.
+                            ChatBro is an AI chatbot that writes text.
                         </Typography>
 
                         {/* INPUT */}
@@ -321,6 +319,18 @@ const Chat = () => {
                                 <ChatItem key={i} {...chat} />
                             ))}
                         </Box>
+
+                        {/* ✅ FOOTER (FIXED SMALL) */}
+                        <Typography sx={{
+                            fontSize: "11px",
+                            color: "#6b7280",
+                            textAlign: "center",
+                            mt: 1,
+                            mb: 0.5,
+                            lineHeight: 1.4
+                        }}>
+                            ChatBro can make mistakes. By messaging ChatBro, you agree to our Terms of Service and acknowledge our Privacy Policy.
+                        </Typography>
 
                     </Box>
                 </Box>
